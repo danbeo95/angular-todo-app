@@ -1,36 +1,49 @@
 <div class="container">
-    <div style="margin-bottom: 10px">
+  <mat-list>
+    <mat-list-item>
+      Author : Bùi Ngọc Dân
+    </mat-list-item>
+    <mat-list-item>
+      Tech : Angular, firebase, angular material
+    </mat-list-item>
+  </mat-list>
+    <div style="margin-bottom: 10px" style="display: flex;align-items: center;">
         <mat-form-field>
             <mat-label>Tìm kiếm</mat-label>
-            <input matInput >
+            <input matInput [formControl]="searchForm" >
         </mat-form-field>
+        <mat-spinner [diameter]="20" *ngIf="isSearching"></mat-spinner>
         <button mat-raised-button color="primary" style="margin-left: 20px;" (click)="onClickAdd()">Add todo</button>
     </div>
-    <mat-list>
-      <mat-list-item>
-        <mat-checkbox></mat-checkbox>
-        <div class="todo__name">Todo replay_10</div>
+    <mat-list [formGroup]="form">
+      <mat-list-item [formArrayName]="'todos'" *ngFor="let todo of todos;let i = index">
+        <mat-checkbox [formControlName]="i"></mat-checkbox>
+        <div class="todo__name">{{todo.name}}</div>
+        <div  class="todo__status">
+          <span>{{todo.piority}}, </span>
+          <span>{{todo.status}}</span>
+        </div>
         <div>
-            <button mat-raised-button color="primary" style="margin-right: 10px;">Detail</button>
-            <button mat-raised-button color="danger">Remove</button>
+            <button mat-raised-button color="primary" style="margin-right: 10px;" (click)="onClickDetail(todo)">Detail</button>
+            <button mat-raised-button color="danger" (click)="onClickRemove(todo.id)">Remove</button>
         </div>
       </mat-list-item>
-      <mat-list-item>
-        <mat-checkbox></mat-checkbox>
-        <div class="todo__name">Todo replay_10</div>
-        <div>
-            <button mat-raised-button color="primary" style="margin-right: 10px;">Detail</button>
-            <button mat-raised-button color="danger">Remove</button>
-        </div>
-      </mat-list-item>
-      <mat-list-item>
-        <mat-checkbox></mat-checkbox>
-        <div class="todo__name">Todo replay_10</div>
-        <div>
-            <button mat-raised-button color="primary" style="margin-right: 10px;">Detail</button>
-            <button mat-raised-button color="danger">Remove</button>
-        </div>
-      </mat-list-item>
+    
     </mat-list>
+
+    <mat-toolbar color="warn"  class="todo__all" *ngIf="canShowFooter">
+      <div style="text-align: center;">
+        <mat-spinner *ngIf="isLoading" [diameter]="40"></mat-spinner>
+    </div>
+      <mat-list  style="width: 100%;">
+        <mat-list-item>
+          <div style="flex: 1;">Selected {{totalSelected}}</div>
+          <div>
+              <button mat-raised-button color="primary" style="margin-right: 10px;" (click)="onClickRemoveAll()">Remove</button>
+              <button mat-raised-button color="danger" (click)="onClickDoneAll()">Done</button>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </mat-toolbar>
 </div>
 

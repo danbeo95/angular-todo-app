@@ -1,26 +1,38 @@
-
-<mat-dialog-content>
-   <mat-form-field>
-       <mat-label>Name</mat-label>
-       <input matInput />
-   </mat-form-field>
-   <mat-form-field appearance="fill">
-    <mat-label>Favorite food</mat-label>
-    <mat-select>
-      <mat-option  [value]="'dan'">
-       dan
-      </mat-option>
-      <mat-option  [value]="'dan'">
-        dan
-       </mat-option>
-       <mat-option  [value]="'dan'">
-        dan
-       </mat-option>
-    </mat-select>
-  </mat-form-field>
+<mat-dialog-content [formGroup]="form">
+    <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input
+            matInput
+            formControlName="name">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Piority</mat-label>
+        <mat-select formControlName="piority">
+            <mat-option [value]="'hight'">hight</mat-option>
+            <mat-option [value]="'normal'">normal</mat-option>
+        </mat-select>
+    </mat-form-field>
 </mat-dialog-content>
 
-<mat-dialog-actions>
-    <button mat-button >Close</button>
-    <button mat-button>Save</button>
+
+
+<mat-dialog-actions align="end">
+    <div style="text-align: center;">
+        <mat-spinner
+            *ngIf="isLoading"
+            [diameter]="40"></mat-spinner>
+    </div>
+    <button
+        (click)="onClickClose()"
+        mat-raised-button
+        [disabled]="isLoading">
+        Close
+    </button>
+    <button
+        (click)="onClickSave()"
+        mat-raised-button
+        color="primary"
+        [disabled]="isLoading || form.invalid">
+        Save
+    </button>
 </mat-dialog-actions>
