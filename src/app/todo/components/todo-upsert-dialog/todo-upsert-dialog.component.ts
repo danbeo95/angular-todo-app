@@ -12,6 +12,7 @@ import { Todo } from '../../models/todo';
 export class TodoUpsertDialogComponent implements OnInit {
   form: FormGroup;
   isLoading: boolean;
+  currentDate = new Date();
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialogRef<TodoUpsertDialogComponent>,
@@ -22,15 +23,19 @@ export class TodoUpsertDialogComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       name: this.fb.control('', [Validators.required]),
-      piority: this.fb.control('', [Validators.required])
+      piority: this.fb.control('', [Validators.required]),
+      startAt:this.fb.control('',[Validators.required])
     });
     if (this.data) {
-      this.form.patchValue(this.data);
+      this.form.patchValue({
+        ...this.data,
+        startAt:this.data.startAt.toDate()
+      });
     }
   }
 
   onClickSave() {
-    if(!this.data){
+    if (!this.data) {
       this.doAddNewTodo();
     } else {
       this.doUpdateTodo();
@@ -38,7 +43,7 @@ export class TodoUpsertDialogComponent implements OnInit {
   }
   doAddNewTodo() {
     const todo = this.form.value as Todo;
-    this.todoService.addTodo({ ...todo, status: 'progress' }).then(() => {
+    this.todoService.addTodo({ ...todo, status: 'progress', searchKeywords: todo.name.split('') }).then(() => {
       this.isLoading = false;
       this.dialog.close();
     }, e => {

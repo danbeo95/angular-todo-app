@@ -56,6 +56,19 @@ export class TodoService {
     return this.todosCollection.doc(todoId).delete();
   }
   searchTodo(query: string) {
-    return query ? this.afstore.collection<Todo>('todos', ref => ref.where('name', '==', query)).valueChanges() : this.afstore.collection<Todo>('todos').valueChanges();;
+    return query ?
+      this.afstore.collection<Todo>('todos', ref => ref.orderBy('name').where('name', '>=', query).where('name', '<=', query + '\uf8ff'))
+        .snapshotChanges().pipe(
+          map(actions => actions.map(a => {
+            const data = a.payload.doc.data();
+            return { ...data, id: a.payload.doc.id }
+          }))
+        ) : this.afstore.collection<Todo>('todos').snapshotChanges().pipe(
+          map(actions => actions.map(a => {
+            const data = a.payload.doc.data();
+            return { ...data, id: a.payload.doc.id }
+          }))
+        )
   }
 }
+

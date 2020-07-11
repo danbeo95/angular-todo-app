@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSidenavModule, MatToolbarModule } from '@angular/material';
+import { MatSidenavModule, MatToolbarModule, MatNativeDateModule } from '@angular/material';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
@@ -29,6 +29,7 @@ const firebaseConfig = {
     MatSidenavModule,
     MatToolbarModule,
     AngularFirestoreModule,
+    MatNativeDateModule,
     AngularFireModule.initializeApp(firebaseConfig)
   ],
   providers: [],

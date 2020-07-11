@@ -24,7 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatDatepickerModule,
     ReactiveFormsModule,
     MatToolbarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDatepickerModule
   ],
   entryComponents: [
     TodoUpsertDialogComponent

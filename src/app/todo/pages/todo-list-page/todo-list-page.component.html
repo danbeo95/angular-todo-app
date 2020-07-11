@@ -6,6 +6,9 @@
     <mat-list-item>
       Tech : Angular, firebase, angular material
     </mat-list-item>
+    <mat-list-item>
+      Change log : fix search,date time from feeback. Thanks you !
+    </mat-list-item>
   </mat-list>
     <div style="margin-bottom: 10px" style="display: flex;align-items: center;">
         <mat-form-field>
@@ -18,7 +21,7 @@
     <mat-list [formGroup]="form">
       <mat-list-item [formArrayName]="'todos'" *ngFor="let todo of todos;let i = index">
         <mat-checkbox [formControlName]="i"></mat-checkbox>
-        <div class="todo__name">{{todo.name}}</div>
+        <div class="todo__name">{{todo.name}}, start at:{{todo.startAt.seconds * 1000 | date : 'dd/MM/yyyy'}}</div>
         <div  class="todo__status">
           <span>{{todo.piority}}, </span>
           <span>{{todo.status}}</span>
